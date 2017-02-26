@@ -1,25 +1,37 @@
 var random = require("random");
 var ImageJS = require("imagejs");
 var counter = 0;
+var input = [];
 //var integers;
 var bitmap = new ImageJS.Bitmap({width: 128, height: 128});
 function randomCallback(integers){
 // Prints row 0, column 0
-    console.log(integers);
-    /*for(var i = 0 ; i < 10; i++){
-        for (var j = 0; j < 10; j++) {
-            bitmap.setPixel(i,j, integers[++counter],integers[++counter],integers[++counter],integers[++counter]);
+    //console.log(integers);
+    for(var m = 0; m < 1000; m++){
+        for(var k = 0; k < integers.length; k++){
+            input[counter] = integers[k];
+            counter++;
         }
-    }*/
+    }
+    //console.log(input.length);
+    counter = 0;
+    for(var i = 0 ; i < 128; i++){
+        for (var j = 0; j < 128; j++) {
+            var temp = integers[counter];
+            var color = {r: temp, g: temp, b: temp};
+            bitmap.setPixel(i,j,color);
+            counter++;
+        }
+    }
 }
 var options = {
 	secure: true, // Make the request secure
-    num: 10000,      // Get 10 integers
+    num: 100,      // Get 10 integers
     min: 0,     // Minimum of -10
     max: 256,      // Maximum of 10
-    col: 3,       // 2 columns
+    col: 0,       // 2 columns
     base: 10,     // Use Base 16
-    rnd: "id.123" // Which set of random numbers to use
+    rnd: "new" // Which set of random numbers to use
 };
 function errorCallback(type,code,string){
     console.log("RANDOM.ORG Error: Type: "+type+", Status Code: "+code+", Response Data: "+string);
@@ -27,27 +39,7 @@ function errorCallback(type,code,string){
 random.generateIntegers(randomCallback,options,errorCallback);
 
 
- 
-// Create a bitmap filled with green 
-//var greenBitmap = new ImageJS.Bitmap({width: 100, height: 100, color: {r: 255, g: 255, b: 255, a: 255});
- 
-// Copy a bitmap 
-//var copy = new ImageJS.Bitmap(otherBitmap);
- 
-// Create a bitmap and attach to supplied data structure 
-/*var attachedBitmap = new ImageJS.Bitmap({
-    width: 100,
-    height: 100,
-    data: new Buffer(4 * 100 * 100)
-});*/
- 
-// Create an empty (null) bitmap, ready for reading from file or stream 
-//var nullBitmap = new ImageJS.Bitmap();
-//console.log(bitmap);
-
-
-
-return bitmap.writeFile("image.jpg", { quality:75 })
+return bitmap.writeFile("image.jpg", { quality:90 })
     .then(function() {
         // bitmap has been saved 
 });
